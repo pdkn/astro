@@ -10,5 +10,10 @@ export default (element) => (Component, props, children) => {
 		slots.default = () => h(StaticHtml, { value: children });
 	}
 	const app = createSSRApp({ name, render: () => h(Component, props, slots) });
+	if (props.vueUse && props.vueUse.length > 0) {
+		props.vueUse.forEach(lib => {
+			app.use(lib);
+		});
+	}	
 	app.mount(element, true);
 };
